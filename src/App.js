@@ -42,12 +42,35 @@ const List = styled.ScrollView`
 export default function App() {
     console.log("all right");
     const width = Dimensions.get('window').width;
+
+    // 할일 목록 임시 데이터
+    const tempData = {
+        1: { id: '1', text: 'react native', completed: false },
+        2: { id: '2', text: 'expo', completed: true },
+        3: { id: '3', text: 'js', completed: false }
+    };
+
+    // 실제 할일 목록을 저장하는 state, 임시 데이터로 초기화
+    const [tasks, setTasks] = useState(tempData);
+
+    // 입력 데이터를 저장하는 state
     const [newTask, setNewTask] = useState('');
-    // 입력을 완료하면 인풋 컴포넌트의 내용을 지우고 해당 내용으로 얼럿을 띄운다
+
+    // 만약 입력값이 없으면 추가하지 않고 반환한다
+    // 현재 시간으로 ID값을 만들고 입력 값 state와 함께 저장한다
+    // 할일 목록 state에 기존 state와 함께 추가
     const addTask = () => {
-        alert(newTask);
+        if(newTask.length < 1) {
+            return;
+        }
+        const ID = Date.now().toString();
+        const newTaskObject = {
+            [ID]: { id: ID, text: newTask, completed: false },
+        };
         setNewTask('');
-    }
+        setTasks({ ...tasks, ...newTaskObject });
+    };
+
     return (
         <ThemeProvider theme={theme}>
             <Container>
@@ -64,22 +87,15 @@ export default function App() {
                     onSubmitEditing={addTask}
                 />
                 {/* props로 현재 기기의 넓이를 받고 할일 
-                아이템들을 스크롤할 수 있는 목록으로 정리 */}
+                아이템들을 스크롤할 수 있는 목록으로 정리
+                tasks 할일 목록 state에서 거꾸로 출력하며 할일 목록을 보여준다 */}
                 <List width={width}>
-                    <Task text='React Native' />
-                    <Task text='Expo' />
-                    <Task text='JS' />
-                    <Task text='React Native' />
-                    <Task text='React Native' />
-                    <Task text='React Native' />
-                    <Task text='React Native' />
-                    <Task text='React Native' />
-                    <Task text='React Native' />
-                    <Task text='React Native' />
-                    <Task text='React Native' />
-                    <Task text='React Native' />
-                    <Task text='React Native' />
-                    <Task text='React Native' />
+                    {Object.values(tasks)
+                        .reverse()
+                        .map(item => (
+                            <Task key={item.id} text={item.text} />
+                        ))
+                    }
                 </List>
             </Container>
         </ThemeProvider>
