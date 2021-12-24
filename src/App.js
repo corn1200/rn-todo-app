@@ -3,6 +3,7 @@
 import { StyleSheet, Text, View, StatusBar } from 'react-native';
 import styled, { ThemeProvider } from 'styled-components/native';
 import { theme } from './theme';
+import Input from './components/input';
 
 // 내용을 감싸기 위한(Container) 스타일 컴포넌트 생성(styled.View)
 // props로 받은 테마 값(${({ theme }))의 
@@ -35,11 +36,12 @@ export default function App() {
     return (
         <ThemeProvider theme={theme}>
             <Container>
-                <Title>TODO List</Title>
                 <StatusBar 
                     style="light-content"
                     backgroundColor={theme.background}
                 />
+                <Title>TODO List</Title>
+                <Input />
             </Container>
         </ThemeProvider>
     );
