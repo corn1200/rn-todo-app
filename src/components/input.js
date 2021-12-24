@@ -42,7 +42,7 @@ const Input = ({ placeholder, value, onChangeText, onSubmitEditing, onBlur }) =>
 };
 
 // props로 넘어와야 하는 타입과 필수 값 여부 설정
-Input.PropTypes = {
+Input.propTypes = {
     placeholder: PropTypes.string,
     value: PropTypes.string.isRequired,
     onChangeText: PropTypes.func.isRequired,
