@@ -3,8 +3,10 @@
 import { StyleSheet, Text, View, StatusBar } from 'react-native';
 import styled, { ThemeProvider } from 'styled-components/native';
 import { theme } from './theme';
-import Input from './components/input';
+import Input from './components/Input';
 import { useState } from "react";
+import IconButton from './components/IconButton';
+import { icons } from './icons';
 
 // 내용을 감싸기 위한(Container) 스타일 컴포넌트 생성(styled.View)
 // props로 받은 테마 값(${({ theme }))의 
@@ -55,6 +57,11 @@ export default function App() {
                     onChangeText={text => setNewTask(text)}
                     onSubmitEditing={addTask}
                 />
+                {/* props로 아이콘과 온 프레스 이벤트를 넘겨줌 */}
+                <IconButton icon={icons.check} onPress={() => alert('check')} />
+                <IconButton icon={icons.uncheck} onPress={() => alert('uncheck')} />
+                <IconButton icon={icons.edit} onPress={() => alert('edit')} />
+                <IconButton icon={icons.delete} onPress={() => alert('delete')} />
             </Container>
         </ThemeProvider>
     );
