@@ -60,7 +60,7 @@ export default function App() {
     // 현재 시간으로 ID값을 만들고 입력 값 state와 함께 저장한다
     // 할일 목록 state에 기존 state와 함께 추가
     const addTask = () => {
-        if(newTask.length < 1) {
+        if (newTask.length < 1) {
             return;
         }
         const ID = Date.now().toString();
@@ -69,6 +69,15 @@ export default function App() {
         };
         setNewTask('');
         setTasks({ ...tasks, ...newTaskObject });
+    };
+
+    // 현재 할일 목록 state를 복사하고
+    // id 에 해당하는 할일을 삭제한다
+    // 할일 state를 할일이 삭제된 state로 교체한다
+    const deleteTask = (id) => {
+        const currentTasks = Object.assign({}, tasks);
+        delete currentTasks[id];
+        setTasks(currentTasks);
     };
 
     return (
@@ -93,7 +102,12 @@ export default function App() {
                     {Object.values(tasks)
                         .reverse()
                         .map(item => (
-                            <Task key={item.id} text={item.text} />
+                            // 할일 state의 값 전체와 삭제 함수를 넘겨준다
+                            <Task
+                                key={item.id}
+                                item={item}
+                                deleteTask={deleteTask}
+                            />
                         ))
                     }
                 </List>

@@ -12,9 +12,14 @@ const Icon = styled.Image`
 `;
 
 // props로 받은 아이콘과 온 프레스 이벤트를 속성에 포함
-const IconButton = ({ icon, onPress }) => {
+const IconButton = ({ icon, onPress, id }) => {
+    // 파라미터에 값을 넣어야 하기 때문에 props를 가공함
+    const _onPress = () => {
+        onPress(id);
+    };
+
     return (
-        <TouchableOpacity onPress={onPress}>
+        <TouchableOpacity onPress={_onPress}>
             <View>
                 <Icon source={icon} />
             </View>
@@ -24,9 +29,11 @@ const IconButton = ({ icon, onPress }) => {
 
 // 아이콘의 값을 아이콘들 중 하나로 설정하고 반드시 넘어오도록 함
 // 온 프레스 값이 함수로 넘어오도록 설정
+// id 값이 문자열이도록 설정
 IconButton.propTypes = {
     icon: PropTypes.oneOf(Object.values(icons)).isRequired,
-    onPress: PropTypes.func
+    onPress: PropTypes.func,
+    id: PropTypes.string
 };
 
 export default IconButton;
