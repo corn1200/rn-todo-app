@@ -21,21 +21,22 @@ const StyledInput = styled.TextInput.attrs(({ theme }) => ({
 // 현재 기기의 넓이 값(useWindowDimensions().width)을 props로 넘겨준다
 // 입력 최대 길이(maxLength)와 자동 대문자 입력(autoCapitalize) 방지
 // 자동 문법(autoCorrect) 방지, 타이핑 키 타입(returnKeyType)을 설정
-const Input = ({ placeholder, value, onChangeText }) => {
+const Input = ({ placeholder, value, onChangeText, onSubmitEditing }) => {
     const width = useWindowDimensions().width;
-    return <StyledInput 
-                width={width} 
-                placeholder={placeholder} 
-                maxLength={50}
-                autoCapitalize="none"
-                autoCorrect={false}
-                returnKeyType="done"
-                keyboardAppearance="dark"
-                // 인풋 컴포넌트가 렌더링 될 때 props 값으로 
-                // 인풋 안의 값과 변경 이벤트 설정
-                value={value}
-                onChangeText={onChangeText}
-            />;
+    return <StyledInput
+        width={width}
+        placeholder={placeholder}
+        maxLength={50}
+        autoCapitalize="none"
+        autoCorrect={false}
+        returnKeyType="done"
+        keyboardAppearance="dark"
+        // 인풋 컴포넌트가 렌더링 될 때 props 값으로 
+        // 인풋 안의 값과 변경 이벤트 설정
+        value={value}
+        onChangeText={onChangeText}
+        onSubmitEditing={onSubmitEditing}
+    />;
 };
 
 // props로 넘어와야 하는 타입과 필수 값 여부 설정

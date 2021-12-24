@@ -35,6 +35,11 @@ const Title = styled.Text`
 export default function App() {
     console.log("all right");
     const [newTask, setNewTask] = useState('');
+    // 입력을 완료하면 인풋 컴포넌트의 내용을 지우고 해당 내용으로 얼럿을 띄운다
+    const addTask = () => {
+        alert(newTask);
+        setNewTask('');
+    }
     return (
         <ThemeProvider theme={theme}>
             <Container>
@@ -44,10 +49,11 @@ export default function App() {
                 />
                 <Title>TODO List</Title>
                 {/* 인풋 컴포넌트에 입력하는 동시에 state에 저장하고 다시 인풋에 보여준다 */}
-                <Input 
+                <Input
                     placeholder="+ Add a Task"
                     value={newTask}
                     onChangeText={text => setNewTask(text)}
+                    onSubmitEditing={addTask}
                 />
             </Container>
         </ThemeProvider>
