@@ -89,6 +89,15 @@ export default function App() {
         setTasks(currentTasks);
     };
 
+    // 현재 할일 state를 복사하고
+    // id에 해당하는 할일을 새로운 item으로 교체한다
+    // 수정 된 state를 저장
+    const updateTask = item => {
+        const currentTasks = Object.assign({}, tasks);
+        currentTasks[item.id] = item;
+        setTasks(currentTasks);
+    }
+
     return (
         <ThemeProvider theme={theme}>
             <Container>
@@ -97,12 +106,14 @@ export default function App() {
                     backgroundColor={theme.background}
                 />
                 <Title>TODO List</Title>
-                {/* 인풋 컴포넌트에 입력하는 동시에 state에 저장하고 다시 인풋에 보여준다 */}
+                {/* 인풋 컴포넌트에 입력하는 동시에 state에 저장하고 다시 인풋에 보여준다
+                인풋 포커스를 잃었을 때 현재 인풋 state를 공백으로 초기화 */}
                 <Input
                     placeholder="+ Add a Task"
                     value={newTask}
                     onChangeText={text => setNewTask(text)}
                     onSubmitEditing={addTask}
+                    onBlur={() => setNewTask('')}
                 />
                 {/* props로 현재 기기의 넓이를 받고 할일 
                 아이템들을 스크롤할 수 있는 목록으로 정리
@@ -112,12 +123,13 @@ export default function App() {
                         .reverse()
                         .map(item => (
                             // 할일 state의 값 전체와 삭제 함수를 넘겨준다
-                            // 토글 함수를 넘겨준다
+                            // 토글 함수를 넘겨준다, 업데이트 함수를 넘겨준다
                             <Task
                                 key={item.id}
                                 item={item}
                                 deleteTask={deleteTask}
                                 toggleTask={toggleTask}
+                                updateTask={updateTask}
                             />
                         ))
                     }

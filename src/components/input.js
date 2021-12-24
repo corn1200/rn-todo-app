@@ -21,7 +21,8 @@ const StyledInput = styled.TextInput.attrs(({ theme }) => ({
 // 현재 기기의 넓이 값(useWindowDimensions().width)을 props로 넘겨준다
 // 입력 최대 길이(maxLength)와 자동 대문자 입력(autoCapitalize) 방지
 // 자동 문법(autoCorrect) 방지, 타이핑 키 타입(returnKeyType)을 설정
-const Input = ({ placeholder, value, onChangeText, onSubmitEditing }) => {
+// props로 넘어온 포커스 상실 이벤트를 스타일 컴포넌트에 적용한다
+const Input = ({ placeholder, value, onChangeText, onSubmitEditing, onBlur }) => {
     const width = useWindowDimensions().width;
     return <StyledInput
         width={width}
@@ -36,6 +37,7 @@ const Input = ({ placeholder, value, onChangeText, onSubmitEditing }) => {
         value={value}
         onChangeText={onChangeText}
         onSubmitEditing={onSubmitEditing}
+        onBlur={onBlur}
     />;
 };
 
@@ -43,7 +45,9 @@ const Input = ({ placeholder, value, onChangeText, onSubmitEditing }) => {
 Input.PropTypes = {
     placeholder: PropTypes.string,
     value: PropTypes.string.isRequired,
-    onChangeText: PropTypes.func.isRequired
+    onChangeText: PropTypes.func.isRequired,
+    onSubmitEditing: PropTypes.func.isRequired,
+    onBlur: PropTypes.func.isRequired
 }
 
 // 스타일 정의 컴포넌트를 모듈로 사용할 수 있도록 설정
