@@ -1,12 +1,11 @@
 // 스타일 컴포넌트 생성(styled)과 
 // 테마 설정을 위한 컴포넌트(ThemeProvider)를 import
-import { StyleSheet, Text, View, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, Dimensions } from 'react-native';
 import styled, { ThemeProvider } from 'styled-components/native';
 import { theme } from './theme';
 import Input from './components/Input';
 import { useState } from "react";
-import IconButton from './components/IconButton';
-import { icons } from './icons';
+import Task from './components/Task';
 
 // 내용을 감싸기 위한(Container) 스타일 컴포넌트 생성(styled.View)
 // props로 받은 테마 값(${({ theme }))의 
@@ -30,12 +29,19 @@ const Title = styled.Text`
     padding: 0 20px;
 `;
 
+// 할일들을 담아둘 할일 목록 컴포넌트 생성
+const List = styled.ScrollView`
+    flex: 1;
+    width: ${({ width }) => width - 40}px;
+`;
+
 // 앱을 렌더링(return) 할 때 테마 파일(./theme.js)의
 // 테마 오브젝트 값을 props로 받는다(theme={theme})
 // 렌더링할 때 테마 적용 컴포넌트(ThemeProvider)에 있는
 // 다른 컴포넌트(Container, Title 등)에서 값을 사용할 수 있다
 export default function App() {
     console.log("all right");
+    const width = Dimensions.get('window').width;
     const [newTask, setNewTask] = useState('');
     // 입력을 완료하면 인풋 컴포넌트의 내용을 지우고 해당 내용으로 얼럿을 띄운다
     const addTask = () => {
@@ -57,11 +63,24 @@ export default function App() {
                     onChangeText={text => setNewTask(text)}
                     onSubmitEditing={addTask}
                 />
-                {/* props로 아이콘과 온 프레스 이벤트를 넘겨줌 */}
-                <IconButton icon={icons.check} onPress={() => alert('check')} />
-                <IconButton icon={icons.uncheck} onPress={() => alert('uncheck')} />
-                <IconButton icon={icons.edit} onPress={() => alert('edit')} />
-                <IconButton icon={icons.delete} onPress={() => alert('delete')} />
+                {/* props로 현재 기기의 넓이를 받고 할일 
+                아이템들을 스크롤할 수 있는 목록으로 정리 */}
+                <List width={width}>
+                    <Task text='React Native' />
+                    <Task text='Expo' />
+                    <Task text='JS' />
+                    <Task text='React Native' />
+                    <Task text='React Native' />
+                    <Task text='React Native' />
+                    <Task text='React Native' />
+                    <Task text='React Native' />
+                    <Task text='React Native' />
+                    <Task text='React Native' />
+                    <Task text='React Native' />
+                    <Task text='React Native' />
+                    <Task text='React Native' />
+                    <Task text='React Native' />
+                </List>
             </Container>
         </ThemeProvider>
     );
