@@ -80,6 +80,15 @@ export default function App() {
         setTasks(currentTasks);
     };
 
+    // 현재 할일 state를 복사하고
+    // id 에 해당하는 할일 완료 여부를 반전 시킨다
+    // 수정 된 state를 저장
+    const toggleTask = (id) => {
+        const currentTasks = Object.assign({}, tasks);
+        currentTasks[id]['completed'] = !currentTasks[id]['completed'];
+        setTasks(currentTasks);
+    };
+
     return (
         <ThemeProvider theme={theme}>
             <Container>
@@ -103,10 +112,12 @@ export default function App() {
                         .reverse()
                         .map(item => (
                             // 할일 state의 값 전체와 삭제 함수를 넘겨준다
+                            // 토글 함수를 넘겨준다
                             <Task
                                 key={item.id}
                                 item={item}
                                 deleteTask={deleteTask}
+                                toggleTask={toggleTask}
                             />
                         ))
                     }

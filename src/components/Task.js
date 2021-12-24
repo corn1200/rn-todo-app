@@ -14,23 +14,30 @@ const Container = styled.View`
 `;
 
 // 아이콘 크기를 제하고 남은 공간을 모두 차지한다
+// 할일 완료 여부에 따라 텍스트 색상과 줄긋기 여부를 정한다
 const Contents = styled.Text`
     flex: 1;
     font-size: 24px;
-    color: ${({ theme }) => theme.text};
+    color: ${({ theme, completed }) => completed ? theme.done : theme.text};
+    text-decoration: ${({ completed }) => completed ? 'line-through' : 'none'};
 `;
 
 // 할일 컴포넌트를 생성, 체크 아이콘과 수정, 삭제 아이콘을 추가한다
-const Task = ({ item, deleteTask }) => {
+// 완료 여부(item.completed)에 따라 렌더링할 아이콘(icons.check : icons.uncheck)을 정한다
+// 만약 할일이 완료 상태이면 수정 아이콘을 렌더링하지 않는다
+const Task = ({ item, deleteTask, toggleTask }) => {
     return (
         <Container>
-            <IconButton icon={icons.uncheck} />
-            <Contents>{item.text}</Contents>
-            <IconButton icon={icons.edit} />
+            <IconButton
+                icon={item.completed ? icons.check : icons.uncheck}
+                item={item}
+                onPress={toggleTask} />
+            <Contents completed={item.completed}>{item.text}</Contents>
+            {item.completed || <IconButton icon={icons.edit} />}
             {/* 현재 할일의 id 값과 온 프레스 이벤트를 넘긴다 */}
             <IconButton
                 icon={icons.delete}
-                id={item.id}
+                item={item}
                 onPress={deleteTask}
             />
         </Container>
@@ -42,7 +49,8 @@ const Task = ({ item, deleteTask }) => {
 // 온 프레스 이벤트의 타입과 필수 전달 여부 설정
 Task.propTypes = {
     text: PropTypes.object.isRequired,
-    deleteTask: PropTypes.func.isRequired
+    deleteTask: PropTypes.func.isRequired,
+    toggleTask: PropTypes.func.isRequired
 };
 
 export default Task;
