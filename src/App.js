@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, StatusBar } from 'react-native';
 import styled, { ThemeProvider } from 'styled-components/native';
 import { theme } from './theme';
 import Input from './components/input';
+import { useState } from "react";
 
 // 내용을 감싸기 위한(Container) 스타일 컴포넌트 생성(styled.View)
 // props로 받은 테마 값(${({ theme }))의 
@@ -32,7 +33,8 @@ const Title = styled.Text`
 // 렌더링할 때 테마 적용 컴포넌트(ThemeProvider)에 있는
 // 다른 컴포넌트(Container, Title 등)에서 값을 사용할 수 있다
 export default function App() {
-    console.log("all right")
+    console.log("all right");
+    const [newTask, setNewTask] = useState('');
     return (
         <ThemeProvider theme={theme}>
             <Container>
@@ -41,7 +43,12 @@ export default function App() {
                     backgroundColor={theme.background}
                 />
                 <Title>TODO List</Title>
-                <Input placeholder="+ Add a Task" />
+                {/* 인풋 컴포넌트에 입력하는 동시에 state에 저장하고 다시 인풋에 보여준다 */}
+                <Input 
+                    placeholder="+ Add a Task"
+                    value={newTask}
+                    onChangeText={text => setNewTask(text)}
+                />
             </Container>
         </ThemeProvider>
     );
