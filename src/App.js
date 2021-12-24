@@ -36,12 +36,12 @@ export default function App() {
     return (
         <ThemeProvider theme={theme}>
             <Container>
-                <StatusBar 
+                <StatusBar
                     style="light-content"
                     backgroundColor={theme.background}
                 />
                 <Title>TODO List</Title>
-                <Input />
+                <Input placeholder="+ Add a Task" />
             </Container>
         </ThemeProvider>
     );
