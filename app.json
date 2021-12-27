@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "rn-todo-app",
+    "name": "ReactNativeTodoApp",
     "slug": "rn-todo-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -20,10 +20,13 @@
       "supportsTablet": true
     },
     "android": {
+      "versionCode": 1,
+      "permissions": ["READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE"],
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon_new.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.corn1200.rntodoapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
